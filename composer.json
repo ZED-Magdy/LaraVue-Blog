@@ -15,6 +15,7 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "overtrue/laravel-like": "^2.0",
+        "spatie/laravel-permission": "^3.13",
         "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
