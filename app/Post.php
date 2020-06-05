@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelLike\Traits\Likeable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Post extends Model
+class Post extends Model implements Searchable
 {
     use Likeable;
     /**
@@ -21,4 +23,14 @@ class Post extends Model
     public function User(){
         return $this->belongsTo('App\User');
     }
+    public function getSearchResult(): SearchResult
+     {
+        $url = route('posts.show', $this->id);
+     
+         return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url
+         );
+     }
 }
