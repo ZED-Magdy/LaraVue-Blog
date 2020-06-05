@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\Imageable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Overtrue\LaravelLike\Traits\Liker;
 
 class User extends Authenticatable
 {
-    use Notifiable, Liker;
+    use Notifiable, Liker, Imageable;
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelLike\Traits\Likeable;
 use Spatie\Searchable\Searchable;
@@ -9,7 +10,7 @@ use Spatie\Searchable\SearchResult;
 
 class Post extends Model implements Searchable
 {
-    use Likeable;
+    use Likeable, Imageable;
     /**
      *
      * @var array
