@@ -18,13 +18,7 @@ interface PostsRepositoryInterface {
      * @param int $id
      * @return JsonResponse|null
      */
-    public function findById(Post $post) : ?JsonResponse;
-    /**
-     *
-     * @param string $slug
-     * @return JsonResponse|null
-     */
-    public function findBySlug(string $slug) : ?JsonResponse;
+    public function find(Post $post) : ?JsonResponse;
     /**
      *
      * @param array $attributes

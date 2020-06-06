@@ -20,7 +20,7 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
     * @return \Illuminate\Http\JsonResponse
     */
     public function paginated(int $perPage = 9) :\Illuminate\Http\JsonResponse {
-        $posts = $this->model->orderBy('id','desc')->paginate($perPage);
+        $posts = $this->model->with(['User','Category'])->orderBy('id','desc')->paginate($perPage);
         return PostResource::collection($posts)->response();
     }
     /**
@@ -28,19 +28,9 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
      * @param integer $id
      * @return \Illuminate\Http\JsonResponse|null
      */
-    public function findById(Post $post): ?\Illuminate\Http\JsonResponse
+    public function find(Post $post): ?\Illuminate\Http\JsonResponse
     {
-       return (new PostResource($post))->response();
-    }
-    /**
-     *
-     * @param string $slug
-     * @return \Illuminate\Http\JsonResponse|null
-     */
-    public function findBySlug(string $slug): ?\Illuminate\Http\JsonResponse
-    {
-        $post = $this->model->where('slug',$slug)->first();
-        return (new PostResource($post))->response();
+       return (new PostResource($post->with(['User','Category'])))->response();
     }
     public function create(array $attributes): ?\Illuminate\Http\JsonResponse
     {

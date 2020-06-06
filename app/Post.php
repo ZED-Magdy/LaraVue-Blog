@@ -24,6 +24,14 @@ class Post extends Model implements Searchable
     public function User(){
         return $this->belongsTo('App\User');
     }
+    
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Category(){
+        return $this->belongsTo('App\Category');
+    }
     public function getSearchResult(): SearchResult
      {
         $url = route('posts.show', $this->id);

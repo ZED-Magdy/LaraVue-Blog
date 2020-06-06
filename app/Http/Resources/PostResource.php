@@ -19,6 +19,8 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'content' => $this->body,
             'slug' => $this->slug,
+            'user' => $this->whenLoaded('User', new UserResource($this->user)),
+            'category' => $this->whenLoaded('Category',new CategoryResource($this->category)),
             'time' => $this->created_at->diffForHumans()
         ];
     }

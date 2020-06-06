@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\CategoryRepository;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\PostsRepositoryInterface;
 use App\Repositories\PostsRepository;
 use Illuminate\Support\ServiceProvider;
@@ -26,5 +28,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(PostsRepositoryInterface::class,PostsRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
     }
 }

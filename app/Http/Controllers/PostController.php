@@ -44,7 +44,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $this->postRepository->findById($post);
+        return $this->postRepository->find($post);
     }
 
     /**
