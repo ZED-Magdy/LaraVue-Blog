@@ -17,6 +17,8 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('user_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->string('title');
             $table->text('body');
             $table->string('slug');

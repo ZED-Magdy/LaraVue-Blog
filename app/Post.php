@@ -15,7 +15,7 @@ class Post extends Model implements Searchable
      *
      * @var array
      */
-    protected $fillable = ['user_id','title','body','slug'];
+    protected $fillable = ['user_id','category_id','title','body','slug'];
 
     /**
      *
