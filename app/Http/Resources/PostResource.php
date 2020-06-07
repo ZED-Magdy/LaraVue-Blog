@@ -19,10 +19,10 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'content' => $this->body,
             'slug' => $this->slug,
+            'time' => $this->created_at->diffForHumans(),
             'user' => $this->whenLoaded('User', new UserResource($this->user)),
             'category' => $this->whenLoaded('Category',new CategoryResource($this->category)),
             'images' => $this->whenLoaded('Images'),
-            'time' => $this->created_at->diffForHumans()
         ];
     }
 }

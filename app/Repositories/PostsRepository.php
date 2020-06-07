@@ -30,13 +30,13 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
      */
     public function find(Post $post): ?\Illuminate\Http\JsonResponse
     {
-       return (new PostResource($post->with(['User','Category','c'])))->response();
+        return (new PostResource($post->load(['User','Category','Images'])))->response();
     }
     public function create(array $attributes): ?\Illuminate\Http\JsonResponse
     {
         $post = $this->model->create($attributes);
         $post->addImages();
-        return (new PostResource($post))->response();
+        return (new PostResource($post->load(['User','Category','Images'])))->response();
     }
     /**
      *
@@ -46,8 +46,12 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
      */
     public function update(array $attributes, Post $post): ?\Illuminate\Http\JsonResponse
     {
-        $post = $post->update($attributes);
-        return (new PostResource($post))->response();
+        $post->update($attributes);
+        if($attributes['images_updated']) {
+            $post->deleteImages();
+            $post->addImages();
+        }
+        return (new PostResource($post->load(['User','Category','Images'])))->response();
     }
     /**
      *
@@ -56,6 +60,7 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
      */
     public function delete(Post $post): ?\Illuminate\Http\JsonResponse
     {
+        $post->deleteImages();
         $post->delete();
         return response()->json(['message' => 'deleted']);
     }

@@ -24,8 +24,13 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required,min:10',
-            'body' => 'required|min:50',
+            'title'          => 'required|min:10',
+            'body'           => 'required|min:50',
+            'user_id'        => 'required',
+            'category_id'    => 'required|min:1',
+            'images'         => 'required|array',
+            'images.*'       => 'required|image|mimes:jpeg,bmp,png,jpg',
+            'images_updated' => 'required|boolean'
         ];
     }
 }
