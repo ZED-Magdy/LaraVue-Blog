@@ -20,9 +20,9 @@ class PostResource extends JsonResource
             'content' => $this->body,
             'slug' => $this->slug,
             'time' => $this->created_at->diffForHumans(),
-            'user' => $this->whenLoaded('User', new UserResource($this->user)),
-            'category' => $this->whenLoaded('Category',new CategoryResource($this->category)),
-            'images' => $this->whenLoaded('Images'),
+            'user' => new UserResource($this->whenLoaded('User')),
+            'category' => new CategoryResource($this->whenLoaded('Category')),
+            'images' => ImageResource::collection($this->whenLoaded('Images')),
         ];
     }
 }
