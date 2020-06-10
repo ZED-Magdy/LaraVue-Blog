@@ -28,7 +28,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      */
     public function find(\App\Category $category): \Illuminate\Http\JsonResponse
     {
-        return (new CategoryResource($category->with(['User','Posts'])))->response();
+        return (new CategoryResource($category->load(['Posts' => fn($q) => $q->with(['User','Images'])])))->response();
     }
     /**
      *
@@ -59,6 +59,6 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     public function delete(\App\Category $category): \Illuminate\Http\JsonResponse
     {
        $category->delete();
-       return response()->json(['message' => 'deleted']); 
+       return response()->json(['message' => 'deleted']);
     }
 }

@@ -14,4 +14,11 @@ class Image extends Model
     public function Imageable(){
         return $this->morphTo();
     }
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function User(){
+        return $this->belongsTo('App\User');
+    }
 }

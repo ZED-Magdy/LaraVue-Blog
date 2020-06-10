@@ -8,18 +8,58 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 trait Imageable {
-
-    public function addImages(){
-        $images_url = $this->addImagesFiles();
-        $images = [];
-        foreach ($images_url as $image_url) {
-            $image = new Image;
-            $image->user_id = auth()->id();
-            $image->url = $image_url;
-            array_push($images,$image);
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function Images(){
+        return $this->morphMany(Image::class,'imageable');
+    }
+    /**
+     *
+     * @param string $requestKey
+     * @param boolean $isArray
+     * @return bool
+     */
+    public function addImages(string $requestKey,bool $isArray){
+        $images = request()->file($requestKey);
+        if(!$isArray){
+            $url = $this->addImageFile($images);
+            $image = $this->addSingleImage($url);
+            $this->Images()->save($image);
+            return true;
         }
-       return $this->Images()->saveMany($images);
-    
+        $imageInstances = [];
+        foreach ($images as $image) {
+            $url = $this->addImageFile($image);
+            $imageInstances[] = $this->addSingleImage($url);
+        }
+        $this->Images()->saveMany($imageInstances);
+        return true;
+    }
+    /**
+     *
+     * @param string $url
+     * @return Image
+     */
+    private function addSingleImage($url){
+        $image = new Image;
+        $image->user_id = auth()->id();
+        $image->url = $url;
+        return $image;
+        
+    }
+    /**
+     *
+     * @param UploadeFile $image
+     * @return string
+     */
+    private function addImageFile($image){
+        $path = 'public/images/';
+        $ext = $image->getClientOriginalExtension();
+        $name = uniqid('',true).'.'.$ext;
+        Storage::put($path.$name,file_get_contents($image));
+        return "images/".$name;
     }
     /**
      *
@@ -46,27 +86,5 @@ trait Imageable {
         }
         return true;
     }
-    /**
-     *
-     * @return array
-     */
-    private function addImagesFiles(){
-        $images = request()->file('images');
-        $path = 'public/images/';
-        $urls = [];
-        foreach($images as $image){
-            $ext = $image->getClientOriginalExtension();
-            $name = uniqid('',true).'.'.$ext;
-            Storage::put($path.$name,file_get_contents($image));
-            array_push($urls,'images/'.$name);
-        }
-        return $urls;
-    }
-    /**
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function Images(){
-        return $this->morphMany(Image::class,'imageable');
-    }
+    
 }

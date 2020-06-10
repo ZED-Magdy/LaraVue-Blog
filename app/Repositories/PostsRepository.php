@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Http\Resources\PostResource;
 use App\Post;
 use App\Repositories\Interfaces\PostsRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class PostsRepository extends BaseRepository implements PostsRepositoryInterface {
     /**
@@ -34,8 +35,11 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
     }
     public function create(array $attributes): ?\Illuminate\Http\JsonResponse
     {
-        $post = $this->model->create($attributes);
-        $post->addImages();
+        $post = DB::transaction(function () use($attributes){
+            $post = $this->model->create($attributes);
+            $post->addImages("images",true);
+            return $post;
+        });
         return (new PostResource($post->load(['User','Category','Images'])))->response();
     }
     /**
@@ -46,11 +50,14 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
      */
     public function update(array $attributes, Post $post): ?\Illuminate\Http\JsonResponse
     {
-        $post->update($attributes);
-        if($attributes['images_updated']) {
-            $post->deleteImages();
-            $post->addImages();
-        }
+        $post = DB::transaction(function () use($attributes,$post){
+            $post->update($attributes);
+            if($attributes['images_updated']) {
+                $post->deleteImages();
+                $post->addImages("images",true);
+            }
+            return $post;
+        });
         return (new PostResource($post->load(['User','Category','Images'])))->response();
     }
     /**

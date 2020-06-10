@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Config;
 
-class UserResource extends JsonResource
+class ImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +17,9 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'time' => $this->created_at->diffForHumans(),
-            'images' => ImageResource::collection($this->whenLoaded('Images')),
-            'roles' => RoleResource::collection($this->whenLoaded('roles'))
+            'user' => new UserResource($this->whenLoaded('User')),
+            'url' => Config::get('app.url')."/storage/". $this->url,
+            'time' => $this->created_at->diffForHumans()
         ];
     }
 }
