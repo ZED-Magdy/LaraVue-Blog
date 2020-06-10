@@ -1,9 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Route;
-Route::resource('posts', 'PostController')->except(['create','edit','update','destroy']);
+Route::resource('posts', 'PostController')->only(['index','show']);
 Route::resource('categories', 'CategoryController')->only(['index','show']);
-Route::group(['middleware' => 'owner'], function () {
-    Route::resource('posts', 'PostController')->only('update','destroy');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('posts','PostController@store');
+    Route::group(['middleware' => 'owner'], function () {
+        Route::resource('posts', 'PostController')->only('update','destroy');
+    });
 });
 Route::group([
     'prefix' => 'auth'

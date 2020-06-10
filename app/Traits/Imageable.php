@@ -44,7 +44,7 @@ trait Imageable {
      */
     private function addSingleImage($url){
         $image = new Image;
-        $image->user_id = auth()->id();
+        $image->user_id = auth()->id() ? auth()->id() : $this->getKey();
         $image->url = $url;
         return $image;
         

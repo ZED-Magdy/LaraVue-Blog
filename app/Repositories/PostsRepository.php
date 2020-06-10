@@ -36,7 +36,13 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
     public function create(array $attributes): ?\Illuminate\Http\JsonResponse
     {
         $post = DB::transaction(function () use($attributes){
-            $post = $this->model->create($attributes);
+            $post = $this->model->create([
+                'title' => $attributes['title'],
+                'body' => $attributes['body'],
+                'category_id'=> $attributes['category_id'],
+                'user_id' => auth()->user()->id,
+                'slug' => $attributes['slug']
+            ]);
             $post->addImages("images",true);
             return $post;
         });

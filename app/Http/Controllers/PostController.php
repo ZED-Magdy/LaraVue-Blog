@@ -33,7 +33,7 @@ class PostController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return $this->postRepository->create($request->all());
+        return $this->postRepository->create($request->only(['title','body','category_id','images','slug']));
     }
 
     /**

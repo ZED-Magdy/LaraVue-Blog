@@ -15,8 +15,7 @@ class Post extends Model implements Searchable
      *
      * @var array
      */
-    protected $fillable = ['user_id','category_id','title','body','slug'];
-
+    protected $fillable = ['category_id','title','body','slug','user_id'];
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
