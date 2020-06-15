@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Yajra\DataTables\DataTables;
 
 class BaseRepository {
     /**
@@ -21,7 +22,7 @@ class BaseRepository {
     
     public function datatable()
     {
-        
+        return datatables()->of($this->model->select())->make(true);
     }
 
 }

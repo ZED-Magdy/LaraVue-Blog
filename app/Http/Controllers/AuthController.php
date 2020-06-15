@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\auth\loginRequest;
 use App\Http\Requests\auth\storeRequest;
 use App\Repositories\Interfaces\ApiAuthRepositoryInterface;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(loginRequest $request)
     {
         return $this->repo->login($request->only(['email','password']));
     }

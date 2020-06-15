@@ -17,7 +17,8 @@
         "overtrue/laravel-like": "^2.0",
         "spatie/laravel-permission": "^3.13",
         "spatie/laravel-searchable": "^1.6",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

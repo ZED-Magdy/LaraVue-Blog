@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\Category\CategoryRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -21,6 +23,11 @@ class CategoryController extends Controller
     {
         $this->repo = $repo;
     }
+
+    public function datatable(){
+        return $this->repo->datatable();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,9 +44,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        return $this->repo->create($request->all());
+        return $this->repo->create($request->only(['name']));
     }
 
     /**
@@ -60,9 +67,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateRequest $request, Category $category)
     {
-        return $this->repo->update($request->all(),$category);
+        return $this->repo->update($request->only(['name']),$category);
     }
 
     /**

@@ -15,10 +15,11 @@ class ImageResource extends JsonResource
      */
     public function toArray($request)
     {
+        //Config::get('app.url')."/storage/".
         return [
             'id' => $this->id,
             'user' => new UserResource($this->whenLoaded('User')),
-            'url' => Config::get('app.url')."/storage/". $this->url,
+            'url' => $this->url,
             'time' => $this->created_at->diffForHumans()
         ];
     }

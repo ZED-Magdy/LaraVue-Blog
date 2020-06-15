@@ -15,6 +15,11 @@ class PostController extends Controller
     {
         $this->postRepository = $postRepository;
     }
+    
+    public function datatable(){
+        return $this->postRepository->datatable();
+    }
+
     /**
      * Display a listing of the resource.
      *
