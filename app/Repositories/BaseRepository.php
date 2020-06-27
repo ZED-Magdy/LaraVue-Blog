@@ -20,8 +20,11 @@ class BaseRepository {
         $this->model = $model;
     }
     
-    public function datatable()
+    public function datatable($relation = null)
     {
+        if($relation) {
+            return datatables()->of($this->model->select()->with($relation))->make(true);
+        }
         return datatables()->of($this->model->select())->make(true);
     }
 

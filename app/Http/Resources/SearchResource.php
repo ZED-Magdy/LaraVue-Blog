@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Config;
 
-class ImageResource extends JsonResource
+class SearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +15,9 @@ class ImageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'user' => new UserResource($this->whenLoaded('User')),
+            'post' => new PostResource($this->searchable),
             'url' => $this->url,
-            'time' => $this->created_at->diffForHumans()
+            'type' => $this->type
         ];
     }
 }

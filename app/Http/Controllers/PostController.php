@@ -17,7 +17,7 @@ class PostController extends Controller
     }
     
     public function datatable(){
-        return $this->postRepository->datatable();
+        return $this->postRepository->datatable(['user','category']);
     }
 
     /**

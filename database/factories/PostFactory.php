@@ -12,7 +12,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'user_id' => rand(1,10),
         'category_id' => rand(1,10),
         'title' => $faker->sentence(),
-        'body' => $faker->paragraph(),
+        'body' => $faker->sentences(100,true),
         'slug' => $faker->slug()
     ];
 });
@@ -27,7 +27,8 @@ $factory->define(Image::class, function(Faker $faker){
     return [
         'url' => $faker->imageUrl(),
         'user_id' => rand(1,10),
-        'imageable_type' => 'App\\User',
-        'imageable_id' => rand(1,10)
+        'imageable_type' => 'App\\Post',
+        'imageable_id' => rand(1,10),
+        'thumbnail' => true
     ];
 });

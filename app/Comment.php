@@ -3,22 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Overtrue\LaravelLike\Traits\Likeable;
 
-class Image extends Model
+class Comment extends Model
 {
-    protected $fillable = ['url','thumbnail','user_id','imageable_id','imageable_type'];
+    use Likeable;
+    protected $fillable = ['user_id','body','commentable_type','commentable_id'];
+
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function Imageable(){
+    public function commentable(){
         return $this->morphTo();
     }
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function User(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
 }

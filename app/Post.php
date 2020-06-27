@@ -31,6 +31,19 @@ class Post extends Model implements Searchable
     public function Category(){
         return $this->belongsTo('App\Category');
     }
+
+    /**
+     * Undocumented function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments(){
+        return $this->morphMany('App\Comment','commentable');
+    }
+    /**
+     *
+     * @return SearchResult
+     */
     public function getSearchResult(): SearchResult
      {
         $url = route('posts.show', $this->id);

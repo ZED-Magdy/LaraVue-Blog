@@ -21,7 +21,7 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
     * @return \Illuminate\Http\JsonResponse
     */
     public function paginated(int $perPage = 9) :\Illuminate\Http\JsonResponse {
-        $posts = $this->model->with(['User'=> fn($q) => $q->with('Images'),'Category','Images'])->orderBy('id','desc')->paginate($perPage);
+        $posts = $this->model->with(['User','Category','Images'])->withCount('comments')->orderBy('id','desc')->paginate($perPage);
         return PostResource::collection($posts)->response();
     }
     /**
@@ -78,3 +78,4 @@ class PostsRepository extends BaseRepository implements PostsRepositoryInterface
         return response()->json(['message' => 'deleted']);
     }
 }
+

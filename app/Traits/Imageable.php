@@ -17,6 +17,13 @@ trait Imageable {
     }
     /**
      *
+     * @return Object|null
+     */
+    public function getThumbnailAttribute(){
+        return $this->Images()->where('thumbnail',true)->latest('id')->first();
+    }
+    /**
+     *
      * @param string $requestKey
      * @param boolean $isArray
      * @return bool
@@ -25,7 +32,7 @@ trait Imageable {
         $images = request()->file($requestKey);
         if(!$isArray){
             $url = $this->addImageFile($images);
-            $image = $this->addSingleImage($url);
+            $image = $this->addSingleImage($url, request()->is_thumbnail);
             $this->Images()->save($image);
             return true;
         }
@@ -42,12 +49,12 @@ trait Imageable {
      * @param string $url
      * @return Image
      */
-    private function addSingleImage($url){
+    private function addSingleImage($url,bool $isThumbnail = false){
         $image = new Image;
         $image->user_id = auth()->id() ? auth()->id() : $this->getKey();
+        $image->thumbnail = $isThumbnail;
         $image->url = $url;
         return $image;
-        
     }
     /**
      *
@@ -59,7 +66,7 @@ trait Imageable {
         $ext = $image->getClientOriginalExtension();
         $name = uniqid('',true).'.'.$ext;
         Storage::put($path.$name,file_get_contents($image));
-        return "images/".$name;
+        return url()->to('/').'/storage/'."images/".$name;
     }
     /**
      *

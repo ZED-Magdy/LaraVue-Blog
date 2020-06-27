@@ -22,6 +22,7 @@ class PostResource extends JsonResource
             'time' => $this->created_at->diffForHumans(),
             'user' => new UserResource($this->whenLoaded('User')),
             'category' => new CategoryResource($this->whenLoaded('Category')),
+            'thumbnail' => new ImageResource($this->thumbnail),
             'images' => ImageResource::collection($this->whenLoaded('Images')),
         ];
     }

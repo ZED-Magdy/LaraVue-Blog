@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\UsersRepositoryInterface;
@@ -16,7 +17,7 @@ class UserController extends Controller
         $this->repo = $repo;
     }
     public function datatable(){
-        return $this->repo->datatable();
+        return $this->repo->datatable('roles');
     }
     /**
      *

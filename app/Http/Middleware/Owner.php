@@ -15,6 +15,9 @@ class Owner
      */
     public function handle($request, Closure $next)
     {
+        if(!auth()->check()){
+            return response()->json(['message' => 'You dont have permission to do this action.'],401);
+        }
         if($request->route()->Parameters()[$request->route()->parameterNames[0]]->user_id != auth()->id()){
             return response()->json(['message' => 'You dont have permission to do this action.'],401);
         }

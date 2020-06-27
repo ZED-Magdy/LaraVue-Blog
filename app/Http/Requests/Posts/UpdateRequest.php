@@ -30,7 +30,8 @@ class UpdateRequest extends FormRequest
             'slug'           => 'required|unique:posts,slug,'.request()->route()->post->id,
             'images'         => 'array|max:3',
             'images.*'       => 'required_with:images|image|mimes:jpeg,bmp,png,jpg',
-            'images_updated' => 'required|boolean'
+            'images_updated' => 'required|boolean',
+            'is_thumbnail' => 'required|boolean',
         ];
     }
 }
