@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::resource('users', 'UserController')->only(['show','update','destroy']);
+Route::resource('users', 'UserController')->except(['create','edit']);
 Route::resource('roles', 'RoleController')->except(['create','edit']);
+Route::resource('categories', 'CategoryController')->except(['create','edit']);
+Route::resource('posts', 'PostController')->except(['create','edit']);
 Route::post('users/{user}/role','RoleController@assignRole');
 Route::delete('users/{user}/role','RoleController@removeRole');
-Route::resource('categories', 'CategoryController')->except(['index','show','create','edit']);
-Route::resource('posts', 'PostController')->except(['create','edit']);
 Route::group(['prefix' => 'datatable'], function () {
     Route::get('users','UserController@datatable');
     Route::get('posts','PostController@datatable');

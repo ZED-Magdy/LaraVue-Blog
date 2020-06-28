@@ -28,7 +28,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      */
     public function find(\App\Category $category): \Illuminate\Http\JsonResponse
     {
-        return (new CategoryResource($category->load(['Posts' => fn($q) => $q->with(['User','Images'])])))->response();
+        return (new CategoryResource($category->load(['Posts' => fn($q) => $q->with(['User'])])))->response();
     }
     /**
      *

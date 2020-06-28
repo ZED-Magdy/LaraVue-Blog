@@ -7,8 +7,8 @@ Route::get('posts/{post}/comments','CommentController@index');
 Route::get('comments/{comment}','CommentController@show');
 // Private Routes
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('likes/{post}','LikeController@getPostLikes');
-    Route::post('likes/{post}','LikeController@toggleLike');
+    Route::get('posts/{post}/like','LikeController@getPostLikes');
+    Route::post('posts/{post}/like','LikeController@toggleLike');
     Route::get('search','SearchController@search');
     Route::post('comments','CommentController@store');
     Route::patch('comments/{comment}','CommentController@update')->middleware('owner');
